@@ -1,6 +1,7 @@
 'use strict'
 
 var Project = require('../models/projects');
+var fs = require('fs');
 
 var controller = {
     home: function (req, res) {
@@ -98,18 +99,40 @@ var controller = {
 
 
     uploadImage: function (req, res) {
-        //var projectId = req.params.id;
+        var projectId = req.params.id;
         var fileName = 'Error upload';
 
         if (req.files) {
-            return res.status(200).send({ files: req.files });
+            var filePath = req.files.image.path;
+            var fileSplit = filePath.split("\\");
+            var fileName = fileSplit[2];
+
+            var extSplit = fileName.split("\.");
+            var fileExt = extSplit[1];
+
+            if (fileExt == 'png' || fileExt == 'jpg' || fileExt == 'jpeg' || fileExt == 'gif') {
+                Project.findByIdAndUpdate(projectId, { image: fileName }, { new: true }, (err, projectUpdate) => {
+                    if (err) return res.status(200).send({ message: "la imagen no se subio" });
+
+                    if (!projectUpdate) return res.status(404).send({ message: "el projecto no exite" });
+                    return res.status(200).send({ project: projectUpdate });
+                });
+
+            }else{
+                fs.unlink(filePath,(err)=>{
+                    return res.status(200).send({message:"la extension no es valida"});
+                })
+            }
+
+
+
         } else {
             console.log("error3")
             return res.status(200).send({ message: fileName })
         }
     },
 
-    
+
 
 };
 

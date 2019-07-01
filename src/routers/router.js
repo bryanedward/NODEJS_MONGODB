@@ -11,8 +11,7 @@ var router = express.Router();
 
 
 var multipart = require('connect-multiparty');
-var multipartyMiddleware = multipart({uploadDir: 'upload'});
-
+var multipartyMiddleware = multipart({uploadDir: 'src/upload'});
 
 //las rutas
 router.get('/home',projectController.home);
