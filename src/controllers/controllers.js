@@ -20,7 +20,7 @@ var controller = {
 
         var params = req.body;
         project.name = params.name;
-        project.descripcion = params.descripcion;
+        project.description = params.description;
         project.category = params.category;
         project.year = params.year;
         project.langs = params.langs;
@@ -66,16 +66,54 @@ var controller = {
     },
 
 
+
     updateProject: function (req, res) {
         var projectId = req.params.id;
         var update = req.body;
 
-        Project.findByIdAndUpdate(projectId, update, (err, projectUdapte) => {
-            if (err) return res.status();
-        });
+        Project.findByIdAndUpdate(projectId, update, { new: true }, (err, projectUpdate) => {
+            if (err) return res.status(500).send({ message: 'error al actualizar' });
 
-    }
+            if (!projectUpdate) return res.status(404).send({ message: 'no existe el projecto para actualizar' });
+
+            return res.status(200).send({
+                project: projectUpdate
+            });
+        });
+    },
+
+
+    deleteProject: function (req, res) {
+        var projectId = req.params.id;
+        Project.findByIdAndDelete(projectId, (err, projectDeleted) => {
+            if (err) return res.send({ message: "error" });
+
+            if (!projectDeleted) return res.send({ message: "no se puede eliminar" });
+
+            return res.status(200).send({
+                project: projectDeleted
+            });
+        });
+    },
+
+
+    uploadImage: function (req, res) {
+        //var projectId = req.params.id;
+        var fileName = 'Error upload';
+
+        if (req.files) {
+            return res.status(200).send({ files: req.files });
+        } else {
+            console.log("error3")
+            return res.status(200).send({ message: fileName })
+        }
+    },
+
+    
+
 };
+
+
 
 //exportar fuera del projecto
 module.exports = controller;
