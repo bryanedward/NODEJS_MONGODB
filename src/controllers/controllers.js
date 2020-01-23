@@ -10,13 +10,10 @@ var controller = {
         });
     },
 
-    test: function (req, res) {
-        return res.status(200).send({
-            message: 'soy el metodo test'
-        });
-    },
+
 
     saveProject: function (req, res) {
+      // TODO: funcion para guardar datos en la db
         var project = new Project();
 
         var params = req.body;
@@ -25,7 +22,7 @@ var controller = {
         project.category = params.category;
         project.year = params.year;
         project.langs = params.langs;
-        project.image = null;
+        
 
         project.save((err, projectStored) => {
             if (err) return res.status(500).send({ message: 'errror al guardar' });
@@ -62,7 +59,7 @@ var controller = {
 
             if (!projects) return (404).send({ message: 'No hay proyectos que mostrar' });
 
-            return res.status(200).send({ projects });
+            return res.status(200).send( projects );
         });
     },
 

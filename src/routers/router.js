@@ -15,11 +15,15 @@ var multipartyMiddleware = multipart({uploadDir: 'src/upload'});
 
 //las rutas
 router.get('/home',projectController.home);
-router.post('/test',projectController.test);
+
 router.post('/save',projectController.saveProject);
+
 router.get('/project/:id?', projectController.getProject);
+
 router.get('/projects', projectController.getProjects);
-router.put('/projects/:id',projectController.updateProject); 
+
+router.put('/projects/:id',projectController.updateProject);
+
 router.delete('/projects/delete/:id',projectController.deleteProject);
 
 router.post('/upload-image/:id',multipartyMiddleware,projectController.uploadImage);
