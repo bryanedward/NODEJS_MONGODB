@@ -22,14 +22,14 @@ var controller = {
         project.category = params.category;
         project.year = params.year;
         project.langs = params.langs;
-        
+
 
         project.save((err, projectStored) => {
             if (err) return res.status(500).send({ message: 'errror al guardar' });
 
             if (!projectStored) return res.status(404).send({ message: 'no se ha podido guardar el proyecto' });
 
-            return res.status(200).send({ project: projectStored });
+            return res.status(200).send({ message: 'archivo almacenado' });
         });
 
     },
