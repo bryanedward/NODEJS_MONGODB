@@ -7,7 +7,7 @@ var port = 3700;
 
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/desarrolladorJunior', {useNewUrlParser : true})
+mongoose.connect('mongodb://heroku_d552rbjp:nrq7heatih0gh5qc5s6k5cbs2s@ds213079.mlab.com:13079/heroku_d552rbjp', {useNewUrlParser : true})
     .then(()=>{
         //crear el servidor
         app.listen(port,()=>{
